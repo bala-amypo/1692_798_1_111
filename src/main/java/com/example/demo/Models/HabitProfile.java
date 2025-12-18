@@ -25,9 +25,3 @@ import java.time.LocalDateT
 
     // getters & setters
 }
-ime;
-
-@Entity
-public class HabitProfile {
-
-    @Id
