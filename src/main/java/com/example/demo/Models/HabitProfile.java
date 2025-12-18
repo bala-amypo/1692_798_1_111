@@ -1,12 +1,7 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-
-@Entity
-public class HabitProfile {
-
-    @Id
+import java.time.LocalDateT
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -30,3 +25,9 @@ public class HabitProfile {
 
     // getters & setters
 }
+ime;
+
+@Entity
+public class HabitProfile {
+
+    @Id
