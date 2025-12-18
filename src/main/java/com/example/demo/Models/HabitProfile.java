@@ -23,6 +23,6 @@ import java.time.LocalDateT
 
     private LocalDateTime updatedAt = LocalDateTime.now();
 
-    // getters & setters
+    
 }
   
