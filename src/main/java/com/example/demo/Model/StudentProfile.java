@@ -23,5 +23,5 @@ public class StudentProfile {
     private Boolean active = true;
     private LocalDateTime createdAt = LocalDateTime.now();
 
-
+    // getters & setters
 }
