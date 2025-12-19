@@ -30,6 +30,3 @@ public class HabitProfile {
 
     // getters & setters
 }
-enum SleepSchedule { EARLY, REGULAR, LATE }
-enum Level { LOW, MEDIUM, HIGH }
-enum SocialPreference { INTROVERT, BALANCED, EXTROVERT }
