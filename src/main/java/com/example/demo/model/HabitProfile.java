@@ -1,42 +1,32 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-
+import java.time.LocalDateTime;
 
 @Entity
 public class HabitProfile {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-private Long id;
+    private Long studentId;
 
+    @Enumerated(EnumType.STRING)
+    private SleepSchedule sleepSchedule;
 
-@Enumerated(EnumType.STRING)
-private SleepSchedule sleepSchedule;
+    private Integer studyHoursPerDay;
 
+    @Enumerated(EnumType.STRING)
+    private Level cleanlinessLevel;
 
-@Enumerated(EnumType.STRING)
-private Level cleanlinessLevel;
+    @Enumerated(EnumType.STRING)
+    private Level noiseTolerance;
 
+    @Enumerated(EnumType.STRING)
+    private SocialPreference socialPreference;
 
-@Enumerated(EnumType.STRING)
-private Level noiseTolerance;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-
-private int studyHoursPerDay;
-
-
-@Enumerated(EnumType.STRING)
-private SocialPreference socialPreference;
-
-
-@OneToOne
-private StudentProfile student;
-
-
-public SleepSchedule getSleepSchedule() { return sleepSchedule; }
-public Level getCleanlinessLevel() { return cleanlinessLevel; }
-public Level getNoiseTolerance() { return noiseTolerance; }
-public int getStudyHoursPerDay() { return studyHoursPerDay; }
+    // getters & setters
 }
