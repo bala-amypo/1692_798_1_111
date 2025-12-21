@@ -24,7 +24,7 @@
     </properties>
 
     <dependencies>
-         
+
         <!-- Spring Web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
