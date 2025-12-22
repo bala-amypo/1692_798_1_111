@@ -1,22 +1,17 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 public class RoomAssignmentRecord {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String roomNumber;
-    private Long studentAId;
-    private Long studentBId;
-
-    @Enumerated(EnumType.STRING)
-    private AssignmentStatus status;
-
-    private LocalDateTime assignedAt = LocalDateTime.now();
+    private String status;
+    private LocalDateTime assignedAt;
 }
-enum AssignmentStatus { ACTIVE, COMPLETED, CANCELLED }
