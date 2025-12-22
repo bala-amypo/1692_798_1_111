@@ -3,15 +3,6 @@ package com.example.demo.repository;
 import com.example.demo.model.CompatibilityScoreRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
-
-public interface CompatibilityScoreRecordRepository
+public interface CompatibilityScoreRepository
         extends JpaRepository<CompatibilityScoreRecord, Long> {
-
-    List<CompatibilityScoreRecord>
-    findByStudentAIdOrStudentBId(Long studentAId, Long studentBId);
-
-    Optional<CompatibilityScoreRecord>
-    findByStudentAIdAndStudentBId(Long studentAId, Long studentBId);
 }
