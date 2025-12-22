@@ -1,25 +1,32 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class CompatibilityScoreRecord {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private Long studentAId;
     private Long studentBId;
-    private Double score;
-
-    @Enumerated(EnumType.STRING)
-    private CompatibilityLevel compatibilityLevel;
-
-    private LocalDateTime computedAt = LocalDateTime.now();
-
-    @Lob
+    private double score;
     private String detailsJson;
+
+    public void setStudentAId(Long studentAId) {
+        this.studentAId = studentAId;
+    }
+
+    public void setStudentBId(Long studentBId) {
+        this.studentBId = studentBId;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public void setDetailsJson(String detailsJson) {
+        this.detailsJson = detailsJson;
+    }
 }
-enum CompatibilityLevel { LOW, MEDIUM, HIGH, EXCELLENT }
