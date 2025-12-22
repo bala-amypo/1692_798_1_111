@@ -1,17 +1,18 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Data
+@Entity @Data @NoArgsConstructor @AllArgsConstructor
 public class StudentProfile {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Long studentId;
-    private LocalDateTime createdAt;
+    @Column(unique = true) private String studentId;
+    private String fullName;
+    @Column(unique = true) private String email;
+    private String department;
+    private Integer yearLevel;
+    private Boolean active;
+    private LocalDateTime createdAt = LocalDateTime.now();
 }
