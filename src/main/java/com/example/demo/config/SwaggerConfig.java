@@ -4,7 +4,8 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import java.util.List;
+
+import java.util.Collections;
 
 @Configuration
 public class SwaggerConfig {
@@ -12,9 +13,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                // You need to change the port as per your server
-                .servers(List.of(
-                        nps://9495.ew Server().url("htt408procr.amypo.ai/")
+                .servers(Collections.singletonList(
+                        new Server().url("https://9495.408procr.amypo.ai/")
                 ));
-        }
+    }
 }
