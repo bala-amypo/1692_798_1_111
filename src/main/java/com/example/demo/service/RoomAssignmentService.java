@@ -1,30 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.model.RoomAssignmentRecord;
-import com.example.demo.repository.RoomAssignmentRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class RoomAssignmentService {
+public interface RoomAssignmentService {
 
-    private final RoomAssignmentRepository repository;
+    RoomAssignmentRecord assignRoom(RoomAssignmentRecord assignment);
 
-    public RoomAssignmentService(RoomAssignmentRepository repository) {
-        this.repository = repository;
-    }
+    RoomAssignmentRecord updateStatus(Long id, String status);
 
-    public RoomAssignmentRecord assign(RoomAssignmentRecord record) {
-        return repository.save(record);
-    }
+    RoomAssignmentRecord getAssignmentById(Long id);
 
-    public RoomAssignmentRecord getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Assignment not found"));
-    }
+    List<RoomAssignmentRecord> getAssignmentsByStudent(Long studentId);
 
-    public List<RoomAssignmentRecord> getAll() {
-        return repository.findAll();
-    }
+    List<RoomAssignmentRecord> getAllAssignments();
 }

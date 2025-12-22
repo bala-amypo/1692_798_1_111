@@ -1,30 +1,15 @@
-package com.example.demo.service;
+\package com.example.demo.service;
 
 import com.example.demo.model.MatchAttemptRecord;
-import com.example.demo.repository.MatchAttemptRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class MatchAttemptService {
+public interface MatchAttemptService {
 
-    private final MatchAttemptRepository repository;
+    MatchAttemptRecord logMatchAttempt(MatchAttemptRecord attempt);
 
-    public MatchAttemptService(MatchAttemptRepository repository) {
-        this.repository = repository;
-    }
+    MatchAttemptRecord updateAttemptStatus(Long id, String status);
 
-    public MatchAttemptRecord save(MatchAttemptRecord attempt) {
-        return repository.save(attempt);
-    }
+    List<MatchAttemptRecord> getAttemptsByStudent(Long studentId);
 
-    public MatchAttemptRecord getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Attempt not found"));
-    }
-
-    public List<MatchAttemptRecord> getAll() {
-        return repository.findAll();
-    }
+    List<MatchAttemptRecord> getAllAttempts();
 }
