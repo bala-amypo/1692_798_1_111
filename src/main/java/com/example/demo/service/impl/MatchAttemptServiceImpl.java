@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.model.MatchAttemptRecord;
-import com.example.demo.repository.MatchAttemptRecordRepository;
+import com.example.demo.repository.MatchAttemptRepository;
 import com.example.demo.service.MatchAttemptService;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +11,16 @@ import java.util.List;
 @Service
 public class MatchAttemptServiceImpl implements MatchAttemptService {
 
-    private final MatchAttemptRecordRepository repository;
+    private final MatchAttemptRepository repository;
 
-    public MatchAttemptServiceImpl(MatchAttemptRecordRepository repository) {
+    public MatchAttemptServiceImpl(MatchAttemptRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public MatchAttemptRecord logMatchAttempt(MatchAttemptRecord attempt) {
         attempt.setAttemptedAt(LocalDateTime.now());
-        attempt.setStatus("PENDING_REVIEW");
+        attempt.setStatus("PENDING");
         return repository.save(attempt);
     }
 
@@ -33,7 +33,7 @@ public class MatchAttemptServiceImpl implements MatchAttemptService {
 
     @Override
     public List<MatchAttemptRecord> getAttemptsByStudent(Long studentId) {
-        return repository.findByInitiatorStudentIdOrCandidateStudentId(studentId, studentId);
+        return repository.findByStudentId(studentId);
     }
 
     @Override
