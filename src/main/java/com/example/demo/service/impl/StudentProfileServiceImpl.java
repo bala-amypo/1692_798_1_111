@@ -27,18 +27,21 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     }
 
     @Override
-    public StudentProfile updateStudentStatus(Long studentId, boolean active) {
-        StudentProfile profile = repository.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found with id: " + studentId));
+    public StudentProfile findByStudentId(String studentId) {
+        return repository.findByStudentId(studentId)
+                .orElseThrow(() ->
+                        new RuntimeException("Student not found with studentId: " + studentId)
+                );
+    }
 
-        // assuming your record has a field like "active"
-        StudentProfile updated = new StudentProfile(
-                profile.studentId(),
-                profile.name(),
-                profile.department(),
-                active
-        );
+    @Override
+    public StudentProfile updateStudentStatus(Long id, boolean active) {
+        StudentProfile profile = repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Student not found with id: " + id)
+                );
 
-        return repository.save(updated);
+        profile.setActive(active);   // ✅ update ONLY existing field
+        return repository.save(profile);
     }
 }

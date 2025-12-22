@@ -27,8 +27,10 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile getHabitById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Habit not found with id: " + id));
+    public HabitProfile getHabitByStudent(Long studentId) {
+        return repository.findByStudentId(studentId)
+                .orElseThrow(() ->
+                        new RuntimeException("Habit not found for studentId: " + studentId)
+                );
     }
 }
