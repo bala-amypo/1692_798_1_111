@@ -1,21 +1,17 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
+import java.time.LocalDateTime;
 
 @Entity
+@Data
 public class StudentProfile {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private Long studentId;
-
-    private boolean active;
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
+    private LocalDateTime createdAt;
 }
