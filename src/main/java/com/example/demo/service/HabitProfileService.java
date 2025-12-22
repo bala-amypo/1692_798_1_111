@@ -1,33 +1,15 @@
 package com.example.demo.service;
 
 import com.example.demo.model.HabitProfile;
-import com.example.demo.repository.HabitProfileRepository;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
-@Service
-public class HabitProfileService {
+public interface HabitProfileService {
 
-    private final HabitProfileRepository repository;
+    HabitProfile createOrUpdateHabit(HabitProfile habit);
 
-    public HabitProfileService(HabitProfileRepository repository) {
-        this.repository = repository;
-    }
+    HabitProfile getHabitByStudent(Long studentId);
 
-    public HabitProfile saveOrUpdate(HabitProfile habit) {
-        if (habit.getStudyHoursPerDay() < 0) {
-            throw new RuntimeException("study hours must be >= 0");
-        }
-        return repository.save(habit);
-    }
+    HabitProfile getHabitById(Long id);
 
-    public HabitProfile getByStudentId(Long studentId) {
-        return repository.findByStudentId(studentId)
-                .orElseThrow(() -> new RuntimeException("Habit not found"));
-    }
-
-    public List<HabitProfile> getAll() {
-        return repository.findAll();
-    }
+    List<HabitProfile> getAllHabits();
 }

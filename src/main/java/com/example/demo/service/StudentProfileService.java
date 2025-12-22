@@ -1,33 +1,17 @@
 package com.example.demo.service;
 
-import org.springframework.stereotype.Service;
 import com.example.demo.model.StudentProfile;
-import com.example.demo.repository.StudentProfileRepository;
+import java.util.List;
 
-@Service
-public class StudentProfileService {
+public interface StudentProfileService {
 
-    private final StudentProfileRepository repo;
+    StudentProfile createStudent(StudentProfile profile);
 
-    public StudentProfileService(StudentProfileRepository repo) {
-        this.repo = repo;
-    }
+    StudentProfile getStudentById(Long id);
 
-    public StudentProfile create(StudentProfile student) {
-        if (repo.findByStudentId(student.getStudentId()).isPresent()) {
-            throw new RuntimeException("studentId exists");
-        }
-        return repo.save(student);
-    }
+    List<StudentProfile> getAllStudents();
 
-    public StudentProfile getById(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-    }
+    StudentProfile findByStudentId(String studentId);
 
-    public StudentProfile updateStatus(Long id, boolean active) {
-        StudentProfile s = getById(id);
-        s.setActive(active);
-        return repo.save(s);
-    }
+    StudentProfile updateStudentStatus(Long id, boolean active);
 }
