@@ -4,12 +4,6 @@ import com.example.demo.model.HabitProfile;
 import java.util.List;
 
 public interface HabitProfileService {
-
-    HabitProfile createOrUpdateHabit(HabitProfile habit);
-
-    HabitProfile getHabitByStudent(Long studentId);
-
-    HabitProfile getHabitById(Long id);
-
-    List<HabitProfile> getAllHabitProfiles();
+    List<HabitProfile> getAllHabitProfiles(); // Ensure name matches implementation
+    HabitProfile saveHabit(HabitProfile habit);
 }

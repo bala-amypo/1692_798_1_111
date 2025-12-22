@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.model.StudentProfile;
 import com.example.demo.repository.StudentProfileRepository;
 import com.example.demo.service.StudentProfileService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,49 +11,35 @@ import java.util.List;
 @Service
 public class StudentProfileServiceImpl implements StudentProfileService {
 
-    private final StudentProfileRepository repository;
-
-    public StudentProfileServiceImpl(StudentProfileRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private StudentProfileRepository repository;
 
     @Override
-    public StudentProfile createStudent(StudentProfile profile) {
-        return repository.save(profile);
-    }
-
-    @Override
-    public List<StudentProfile> getAllStudents() {
+    public List<StudentProfile> getAllProfiles() {
         return repository.findAll();
     }
 
     @Override
-    public StudentProfile getStudentById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Student not found with id: " + id)
-                );
+    public StudentProfile getProfileById(Long id) {
+        return repository.findById(id).orElse(null);
     }
 
     @Override
-    public StudentProfile findByStudentId(String studentId) {
-        return repository.findAll()
-                .stream()
-                .filter(s -> s.getStudentId().equals(studentId))
-                .findFirst()
-                .orElseThrow(() ->
-                        new RuntimeException("Student not found with studentId: " + studentId)
-                );
+    public StudentProfile saveProfile(StudentProfile profile) {
+        return repository.save(profile);
     }
 
     @Override
-    public void updateStudentStatus(Long id, boolean active) {
-        StudentProfile student = repository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Student not found with id: " + id)
-                );
+    public void deleteProfile(Long id) {
+        repository.deleteById(id);
+    }
 
-        student.setActive(active);
-        repository.save(student);
+    @Override
+    public void toggleActiveStatus(Long id) {
+        StudentProfile student = repository.findById(id).orElse(null);
+        if (student != null) {
+            student.setActive(!student.isActive());
+            repository.save(student);
+        }
     }
 }
