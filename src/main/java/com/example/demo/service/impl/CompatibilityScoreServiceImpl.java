@@ -5,7 +5,7 @@ import com.example.demo.repository.CompatibilityScoreRepository;
 import com.example.demo.service.CompatibilityScoreService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CompatibilityScoreServiceImpl implements CompatibilityScoreService {
@@ -17,9 +17,12 @@ public class CompatibilityScoreServiceImpl implements CompatibilityScoreService 
     }
 
     @Override
-    public CompatibilityScoreRecord saveScore(CompatibilityScoreRecord record) {
-        record.setCompatibilityLevel("HIGH");
-        record.setComputedAt(LocalDateTime.now());
+    public CompatibilityScoreRecord save(CompatibilityScoreRecord record) {
         return repository.save(record);
+    }
+
+    @Override
+    public List<CompatibilityScoreRecord> getAllScores() {
+        return repository.findAll();
     }
 }

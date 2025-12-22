@@ -5,7 +5,7 @@ import com.example.demo.repository.RoomAssignmentRepository;
 import com.example.demo.service.RoomAssignmentService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class RoomAssignmentServiceImpl implements RoomAssignmentService {
@@ -17,16 +17,12 @@ public class RoomAssignmentServiceImpl implements RoomAssignmentService {
     }
 
     @Override
-    public RoomAssignmentRecord assignRoom(RoomAssignmentRecord assignment) {
-        assignment.setAssignedAt(LocalDateTime.now());
-        assignment.setStatus("ASSIGNED");
-        return repository.save(assignment);
+    public RoomAssignmentRecord save(RoomAssignmentRecord record) {
+        return repository.save(record);
     }
 
     @Override
-    public RoomAssignmentRecord updateStatus(Long id, String status) {
-        RoomAssignmentRecord record = repository.findById(id).orElseThrow();
-        record.setStatus(status);
-        return repository.save(record);
+    public List<RoomAssignmentRecord> getAllAssignments() {
+        return repository.findAll();
     }
 }
