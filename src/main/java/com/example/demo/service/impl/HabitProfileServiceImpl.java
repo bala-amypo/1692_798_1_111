@@ -25,4 +25,10 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     public List<HabitProfile> getAllHabits() {
         return repository.findAll();
     }
+
+    @Override
+    public HabitProfile getHabitById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Habit not found with id: " + id));
+    }
 }
