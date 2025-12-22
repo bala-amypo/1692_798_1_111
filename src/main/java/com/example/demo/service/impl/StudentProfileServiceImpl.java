@@ -17,8 +17,8 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     }
 
     @Override
-    public StudentProfile save(StudentProfile profile) {
-        return repository.save(profile);
+    public StudentProfile saveStudent(StudentProfile studentProfile) {
+        return repository.save(studentProfile);
     }
 
     @Override
@@ -27,21 +27,10 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     }
 
     @Override
-    public StudentProfile findByStudentId(String studentId) {
-        return repository.findByStudentId(studentId)
+    public StudentProfile getStudentById(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Student not found with studentId: " + studentId)
+                        new RuntimeException("StudentProfile not found with id: " + id)
                 );
-    }
-
-    @Override
-    public StudentProfile updateStudentStatus(Long id, boolean active) {
-        StudentProfile profile = repository.findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Student not found with id: " + id)
-                );
-
-        profile.setActive(active);   // ✅ update ONLY existing field
-        return repository.save(profile);
     }
 }

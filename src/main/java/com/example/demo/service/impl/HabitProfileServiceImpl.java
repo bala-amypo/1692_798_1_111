@@ -17,8 +17,8 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile save(HabitProfile habit) {
-        return repository.save(habit);
+    public HabitProfile saveHabit(HabitProfile habitProfile) {
+        return repository.save(habitProfile);
     }
 
     @Override
@@ -27,10 +27,10 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile getHabitByStudent(Long studentId) {
-        return repository.findByStudentId(studentId)
+    public HabitProfile getHabitById(Long id) {
+        return repository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Habit not found for studentId: " + studentId)
+                        new RuntimeException("HabitProfile not found with id: " + id)
                 );
     }
 }
