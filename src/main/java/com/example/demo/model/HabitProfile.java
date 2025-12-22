@@ -1,18 +1,22 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Data
+@Entity
 public class HabitProfile {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long studentId;
-    private String sleepSchedule; // EARLY, REGULAR, LATE
-    private Integer studyHoursPerDay;
-    private String cleanlinessLevel; // LOW, MEDIUM, HIGH
-    private String noiseTolerance; // LOW, MEDIUM, HIGH
-    private String socialPreference; // INTROVERT, BALANCED, EXTROVERT
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    
+    private String habitName;
+    private String frequency;
+
+    @ManyToOne
+    private StudentProfile student; // Used by getStudent()
 }

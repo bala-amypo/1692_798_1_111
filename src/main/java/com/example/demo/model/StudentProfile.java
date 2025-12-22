@@ -1,18 +1,19 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.*;
-import java.time.LocalDateTime;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
-@Entity @Data @NoArgsConstructor @AllArgsConstructor
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class StudentProfile {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(unique = true) private String studentId;
-    private String fullName;
-    @Column(unique = true) private String email;
-    private String department;
-    private Integer yearLevel;
-    private Boolean active;
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Id
+    private Long studentId;
+    private String name;
+    private String email;
+    private boolean active; // Used by setActive() and isActive()
 }
