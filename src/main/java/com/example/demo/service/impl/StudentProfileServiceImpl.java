@@ -17,8 +17,8 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     }
 
     @Override
-    public StudentProfile saveStudent(StudentProfile studentProfile) {
-        return repository.save(studentProfile);
+    public StudentProfile createStudent(StudentProfile profile) {
+        return repository.save(profile);
     }
 
     @Override
@@ -46,10 +46,13 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     }
 
     @Override
-    public StudentProfile updateStudentStatus(Long id, boolean status) {
-        return repository.findById(id)
+    public void updateStudentStatus(Long id, boolean active) {
+        StudentProfile student = repository.findById(id)
                 .orElseThrow(() ->
                         new RuntimeException("Student not found with id: " + id)
                 );
+
+        student.setActive(active);
+        repository.save(student);
     }
 }
