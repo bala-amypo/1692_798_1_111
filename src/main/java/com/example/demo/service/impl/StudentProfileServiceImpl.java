@@ -30,7 +30,17 @@ public class StudentProfileServiceImpl implements StudentProfileService {
     public StudentProfile getStudentById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("StudentProfile not found with id: " + id)
+                        new RuntimeException("Student not found with id: " + id)
+                );
+    }
+
+    // 🔧 REQUIRED BY INTERFACE
+    @Override
+    public StudentProfile updateStudentStatus(Long id, boolean status) {
+        // Since model has NO status field, we just return student
+        return repository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Student not found with id: " + id)
                 );
     }
 }
