@@ -3,39 +3,20 @@ package com.example.demo.controller;
 import com.example.demo.model.StudentProfile;
 import com.example.demo.service.StudentProfileService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
-@Tag(name = "Student Profiles")
+@Tag(name = "StudentProfileController")
 public class StudentProfileController {
+    @Autowired private StudentProfileService service;
 
-    private final StudentProfileService service;
-
-    public StudentProfileController(StudentProfileService service) {
-        this.service = service;
-    }
-
-    @PostMapping
-    public StudentProfile create(@RequestBody StudentProfile profile) {
-        return service.createStudent(profile);
-    }
-
-    @GetMapping("/{id}")
-    public StudentProfile get(@PathVariable Long id) {
-        return service.getStudentById(id);
-    }
-
-    @GetMapping
-    public List<StudentProfile> all() {
-        return service.getAllStudents();
-    }
-
-    @PutMapping("/{id}/status")
-    public StudentProfile updateStatus(@PathVariable Long id,
-                                       @RequestParam boolean active) {
+    @PostMapping("/") public StudentProfile create(@RequestBody StudentProfile p) { return service.createStudent(p); }
+    @GetMapping("/") public List<StudentProfile> getAll() { return service.getAllStudents(); }
+    @GetMapping("/{id}") public StudentProfile getById(@PathVariable Long id) { return service.getStudentById(id); }
+    @PutMapping("/{id}/status") public StudentProfile updateStatus(@PathVariable Long id, @RequestParam boolean active) {
         return service.updateStudentStatus(id, active);
     }
 }
