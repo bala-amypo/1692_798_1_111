@@ -17,7 +17,7 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile saveHabit(HabitProfile habitProfile) {
+    public HabitProfile createOrUpdateHabit(HabitProfile habitProfile) {
         return repository.save(habitProfile);
     }
 
@@ -34,12 +34,12 @@ public class HabitProfileServiceImpl implements HabitProfileService {
                 );
     }
 
-    // 🔧 REQUIRED BY INTERFACE
     @Override
     public HabitProfile getHabitByStudent(Long studentId) {
         return repository.findAll()
                 .stream()
-                .filter(h -> h.getStudentId().equals(studentId))
+                .filter(h -> h.getStudent() != null
+                        && h.getStudent().getId().equals(studentId))
                 .findFirst()
                 .orElseThrow(() ->
                         new RuntimeException("Habit not found for student id: " + studentId)
