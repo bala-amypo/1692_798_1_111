@@ -5,7 +5,7 @@ import com.example.demo.repository.HabitProfileRepository;
 import com.example.demo.service.HabitProfileService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class HabitProfileServiceImpl implements HabitProfileService {
@@ -17,8 +17,12 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile updateHabit(HabitProfile habit) {
-        habit.setUpdatedAt(LocalDateTime.now());
+    public HabitProfile save(HabitProfile habit) {
         return repository.save(habit);
+    }
+
+    @Override
+    public List<HabitProfile> getAllHabits() {
+        return repository.findAll();
     }
 }

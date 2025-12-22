@@ -1,15 +1,13 @@
-package com.example.demo.controller;
+package com.example.demo.Controller;
 
 import com.example.demo.model.RoomAssignmentRecord;
 import com.example.demo.service.RoomAssignmentService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/room-assignments")
-@Tag(name = "Room Assignments")
+@RequestMapping("/room-assignments")
 public class RoomAssignmentController {
 
     private final RoomAssignmentService service;
@@ -19,24 +17,8 @@ public class RoomAssignmentController {
     }
 
     @PostMapping
-    public RoomAssignmentRecord assignRoom(@RequestBody RoomAssignmentRecord assignment) {
-        return service.assignRoom(assignment);
-    }
-
-    @PutMapping("/{id}/status")
-    public RoomAssignmentRecord updateStatus(@PathVariable Long id,
-                                             @RequestParam String status) {
-        return service.updateStatus(id, status);
-    }
-
-    @GetMapping("/student/{studentId}")
-    public List<RoomAssignmentRecord> getByStudent(@PathVariable Long studentId) {
-        return service.getAssignmentsByStudent(studentId);
-    }
-
-    @GetMapping("/{id}")
-    public RoomAssignmentRecord getById(@PathVariable Long id) {
-        return service.getAssignmentById(id);
+    public RoomAssignmentRecord create(@RequestBody RoomAssignmentRecord record) {
+        return service.save(record);
     }
 
     @GetMapping
