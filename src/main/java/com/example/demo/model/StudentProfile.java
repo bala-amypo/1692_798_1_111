@@ -8,11 +8,11 @@ import java.time.LocalDateTime;
 public class StudentProfile {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true) private String studentld; 
+    private String studentld; 
     private String fullName;
-    @Column(unique = true) private String email;
+    private String email;
     private String department;
     private Integer yearLevel;
-    private Boolean active;
+    private Boolean active; // This generates getActive() and setActive()
     private LocalDateTime createdAt = LocalDateTime.now();
 }

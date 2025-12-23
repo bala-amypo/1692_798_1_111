@@ -8,16 +8,11 @@ import java.time.LocalDateTime;
 public class HabitProfile {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long studentld; // References StudentProfile PK
-    @Enumerated(EnumType.STRING) private SleepSchedule sleepSchedule;
+    private Long studentld; 
+    private String sleepSchedule;
     private Integer studyHoursPerDay;
-    @Enumerated(EnumType.STRING) private CleanlinessLevel cleanlinessLevel;
-    @Enumerated(EnumType.STRING) private NoiseTolerance noiseTolerance;
-    @Enumerated(EnumType.STRING) private SocialPreference socialPreference;
+    private String cleanlinessLevel;
+    private String noiseTolerance;
+    private String socialPreference;
     private LocalDateTime updatedAt = LocalDateTime.now();
-
-    public enum SleepSchedule { EARLY, REGULAR, LATE }
-    public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
-    public enum NoiseTolerance { LOW, MEDIUM, HIGH }
-    public enum SocialPreference { INTROVERT, BALANCED, EXTROVERT }
 }
