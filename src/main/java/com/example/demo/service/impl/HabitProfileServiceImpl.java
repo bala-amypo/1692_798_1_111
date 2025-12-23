@@ -12,16 +12,17 @@ import java.util.List;
 public class HabitProfileServiceImpl implements HabitProfileService {
     private final HabitProfileRepository repository;
 
-    // Requirement: (HabitProfileRepository)
     public HabitProfileServiceImpl(HabitProfileRepository repository) {
         this.repository = repository;
     }
 
     @Override
     public HabitProfile createOrUpdateHabit(HabitProfile habit) {
-        if (habit.getStudyHoursPerDay() < 0) {
+        // Fix: Check for invalid study hours keyword
+        if (habit.getStudyHoursPerDay() == null || habit.getStudyHoursPerDay() < 0) {
             throw new IllegalArgumentException("invalid study hours");
         }
+        
         return repository.findByStudentld(habit.getStudentld())
                 .map(existing -> {
                     habit.setId(existing.getId());

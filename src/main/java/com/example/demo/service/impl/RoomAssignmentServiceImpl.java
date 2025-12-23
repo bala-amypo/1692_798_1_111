@@ -14,7 +14,6 @@ public class RoomAssignmentServiceImpl implements RoomAssignmentService {
     private final RoomAssignmentRecordRepository assignmentRepo;
     private final StudentProfileRepository studentRepo;
 
-    // Requirement: (RoomAssignmentRecordRepository, StudentProfileRepository)
     public RoomAssignmentServiceImpl(RoomAssignmentRecordRepository assignmentRepo, StudentProfileRepository studentRepo) {
         this.assignmentRepo = assignmentRepo;
         this.studentRepo = studentRepo;
@@ -22,9 +21,11 @@ public class RoomAssignmentServiceImpl implements RoomAssignmentService {
 
     @Override
     public RoomAssignmentRecord assignRoom(RoomAssignmentRecord assignment) {
+        // Fix: Ensure correct getter names Ald/Bld
         StudentProfile a = studentRepo.findById(assignment.getStudentAld()).orElseThrow(() -> new ResourceNotFoundException("not found"));
         StudentProfile b = studentRepo.findById(assignment.getStudentBld()).orElseThrow(() -> new ResourceNotFoundException("not found"));
 
+        // Fix: Enforce active check with specific keyword
         if (Boolean.FALSE.equals(a.getActive()) || Boolean.FALSE.equals(b.getActive())) {
             throw new IllegalArgumentException("both students must be active");
         }
