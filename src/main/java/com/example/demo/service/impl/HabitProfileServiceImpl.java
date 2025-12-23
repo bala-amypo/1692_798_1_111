@@ -1,18 +1,39 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.HabitProfile;
 import com.example.demo.repository.HabitProfileRepository;
 import com.example.demo.service.HabitProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class HabitProfileServiceImpl implements HabitProfileService {
+    private final HabitProfileRepository repository;
 
-    @Autowired
-    private HabitProfileRepository repository;
+    // Requirement: (HabitProfileRepository)
+    public HabitProfileServiceImpl(HabitProfileRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public HabitProfile createOrUpdateHabit(HabitProfile habit) {
+        if (habit.getStudyHoursPerDay() < 0) {
+            throw new IllegalArgumentException("invalid study hours");
+        }
+        return repository.findByStudentld(habit.getStudentld())
+                .map(existing -> {
+                    habit.setId(existing.getId());
+                    habit.setUpdatedAt(LocalDateTime.now());
+                    return repository.save(habit);
+                }).orElseGet(() -> repository.save(habit));
+    }
+
+    @Override
+    public HabitProfile getHabitByStudent(Long studentld) {
+        return repository.findByStudentld(studentld).orElseThrow(() -> new ResourceNotFoundException("not found"));
+    }
 
     @Override
     public List<HabitProfile> getAllHabitProfiles() {
@@ -20,11 +41,7 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile saveHabit(HabitProfile habit) {
-        // Example logic for the error where getStudent() was missing
-        if (habit.getStudent() != null) {
-            System.out.println("Saving habit for student: " + habit.getStudent().getStudentId());
-        }
-        return repository.save(habit);
+    public HabitProfile getHabitByld(Long id) {
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found"));
     }
 }
