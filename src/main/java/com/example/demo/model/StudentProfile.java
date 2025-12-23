@@ -1,19 +1,15 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
-@Data
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@Data // If using Lombok, otherwise generate Getters and Setters
 public class StudentProfile {
     @Id
-    private Long studentId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
     private String name;
-    private String email;
-    private boolean active; // Used by setActive() and isActive()
+    private boolean isActive; // This is the field we are updating
 }
