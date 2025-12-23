@@ -1,22 +1,23 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
+import java.time.LocalDateTime;
 
-@Data
-@Entity
+@Entity @Data
 public class HabitProfile {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String habitName;
-    private String frequency;
+    private Long studentld; // References StudentProfile PK
+    @Enumerated(EnumType.STRING) private SleepSchedule sleepSchedule;
+    private Integer studyHoursPerDay;
+    @Enumerated(EnumType.STRING) private CleanlinessLevel cleanlinessLevel;
+    @Enumerated(EnumType.STRING) private NoiseTolerance noiseTolerance;
+    @Enumerated(EnumType.STRING) private SocialPreference socialPreference;
+    private LocalDateTime updatedAt = LocalDateTime.now();
 
-    @ManyToOne
-    private StudentProfile student; // Used by getStudent()
+    public enum SleepSchedule { EARLY, REGULAR, LATE }
+    public enum CleanlinessLevel { LOW, MEDIUM, HIGH }
+    public enum NoiseTolerance { LOW, MEDIUM, HIGH }
+    public enum SocialPreference { INTROVERT, BALANCED, EXTROVERT }
 }
