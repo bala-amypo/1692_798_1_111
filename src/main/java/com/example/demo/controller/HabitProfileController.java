@@ -2,20 +2,40 @@ package com.example.demo.controller;
 
 import com.example.demo.model.HabitProfile;
 import com.example.demo.service.HabitProfileService;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/habits")
+@Tag(name = "Habit Profile Management", description = "Endpoints for managing student habits")
 public class HabitProfileController {
 
-    @Autowired
-    private HabitProfileService service;
+    private final HabitProfileService habitService;
 
-    @GetMapping
-    public List<HabitProfile> getAll() {
-        // This was line 38 - fixed to match service method name
-        return service.getAllHabitProfiles(); 
+    public HabitProfileController(HabitProfileService habitService) {
+        this.habitService = habitService;
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<HabitProfile> createOrUpdateHabit(@RequestBody HabitProfile habit) {
+        return ResponseEntity.ok(habitService.createOrUpdateHabit(habit));
+    }
+
+    @GetMapping("/student/{studentld}")
+    public ResponseEntity<HabitProfile> getHabitByStudent(@PathVariable Long studentld) {
+        return ResponseEntity.ok(habitService.getHabitByStudent(studentld));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HabitProfile> getHabitById(@PathVariable Long id) {
+        return ResponseEntity.ok(habitService.getHabitByld(id));
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<HabitProfile>> getAllHabits() {
+        return ResponseEntity.ok(habitService.getAllHabitProfiles());
     }
 }
