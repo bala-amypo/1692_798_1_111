@@ -7,7 +7,7 @@ public interface HabitProfileService {
 
     HabitProfile createOrUpdateHabit(HabitProfile habit);
 
-    HabitProfile getHabitByStudentId(String studentId);
+    HabitProfile getHabitByStudent(String studentId);
 
     HabitProfile getHabitById(Long id);
 

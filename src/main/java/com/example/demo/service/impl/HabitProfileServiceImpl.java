@@ -1,14 +1,3 @@
-package com.example.demo.service.impl;
-
-import com.example.demo.exception.ResourceNotFoundException;
-import com.example.demo.model.HabitProfile;
-import com.example.demo.repository.HabitProfileRepository;
-import com.example.demo.service.HabitProfileService;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
 @Service
 public class HabitProfileServiceImpl implements HabitProfileService {
 
@@ -38,7 +27,7 @@ public class HabitProfileServiceImpl implements HabitProfileService {
     }
 
     @Override
-    public HabitProfile getHabitByStudentId(String studentId) {
+    public HabitProfile getHabitByStudent(String studentId) {
         return repository.findByStudentId(studentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Habit not found"));
     }
