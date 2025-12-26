@@ -1,6 +1,5 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.RoomAssignmentRecord;
 import com.example.demo.model.StudentProfile;
 import com.example.demo.repository.RoomAssignmentRecordRepository;
@@ -11,46 +10,51 @@ import java.util.List;
 
 @Service
 public class RoomAssignmentServiceImpl implements RoomAssignmentService {
-    private final RoomAssignmentRecordRepository assignmentRepo;
-    private final StudentProfileRepository studentRepo;
+    private final RoomAssignmentRecordRepository repository;
+    private final StudentProfileRepository studentRepository;
 
-    public RoomAssignmentServiceImpl(RoomAssignmentRecordRepository assignmentRepo, StudentProfileRepository studentRepo) {
-        this.assignmentRepo = assignmentRepo;
-        this.studentRepo = studentRepo;
+    public RoomAssignmentServiceImpl(RoomAssignmentRecordRepository repository,
+                                   StudentProfileRepository studentRepository) {
+        this.repository = repository;
+        this.studentRepository = studentRepository;
     }
 
     @Override
     public RoomAssignmentRecord assignRoom(RoomAssignmentRecord assignment) {
-        // Fix: Ensure correct getter names Ald/Bld
-        StudentProfile a = studentRepo.findById(assignment.getStudentAld()).orElseThrow(() -> new ResourceNotFoundException("not found"));
-        StudentProfile b = studentRepo.findById(assignment.getStudentBld()).orElseThrow(() -> new ResourceNotFoundException("not found"));
+        StudentProfile studentA = studentRepository.findById(assignment.getStudentAId())
+            .orElseThrow(() -> new RuntimeException("Student A not found"));
+        StudentProfile studentB = studentRepository.findById(assignment.getStudentBId())
+            .orElseThrow(() -> new RuntimeException("Student B not found"));
 
-        // Fix: Enforce active check with specific keyword
-        if (Boolean.FALSE.equals(a.getActive()) || Boolean.FALSE.equals(b.getActive())) {
+        if (!studentA.getActive() || !studentB.getActive()) {
             throw new IllegalArgumentException("both students must be active");
         }
-        return assignmentRepo.save(assignment);
+
+        assignment.setStatus(RoomAssignmentRecord.Status.ACTIVE);
+        return repository.save(assignment);
     }
 
     @Override
-    public RoomAssignmentRecord getAssignmentByld(Long id) {
-        return assignmentRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("not found"));
+    public RoomAssignmentRecord updateStatus(Long id, String status) {
+        RoomAssignmentRecord assignment = repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Assignment not found"));
+        assignment.setStatus(RoomAssignmentRecord.Status.valueOf(status));
+        return repository.save(assignment);
     }
 
     @Override
-    public List<RoomAssignmentRecord> getAssignmentsByStudent(Long studentld) {
-        return assignmentRepo.findByStudentAldOrStudentBld(studentld, studentld);
+    public RoomAssignmentRecord getAssignmentById(Long id) {
+        return repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Assignment not found"));
+    }
+
+    @Override
+    public List<RoomAssignmentRecord> getAssignmentsByStudent(Long studentId) {
+        return repository.findByStudentAIdOrStudentBId(studentId, studentId);
     }
 
     @Override
     public List<RoomAssignmentRecord> getAllAssignments() {
-        return assignmentRepo.findAll();
-    }
-
-    @Override
-    public void updateStatus(Long id, String status) {
-        RoomAssignmentRecord r = getAssignmentByld(id);
-        r.setStatus(status);
-        assignmentRepo.save(r);
+        return repository.findAll();
     }
 }
