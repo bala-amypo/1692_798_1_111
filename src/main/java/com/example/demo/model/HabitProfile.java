@@ -1,34 +1,81 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 public class HabitProfile {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long studentld;
-    private String sleepSchedule;
-    private Integer studyHoursPerDay;
-    private String cleanlinessLevel;
-    private String noiseTolerance;
-    private String socialPreference;
-    private LocalDateTime updatedAt = LocalDateTime.now();
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    public Long getStudentld() { return studentld; }
-    public void setStudentld(Long studentld) { this.studentld = studentld; }
-    public Integer getStudyHoursPerDay() { return studyHoursPerDay; }
-    public void setStudyHoursPerDay(Integer studyHoursPerDay) { this.studyHoursPerDay = studyHoursPerDay; }
-    public String getSleepSchedule() { return sleepSchedule; }
-    public void setSleepSchedule(String sleepSchedule) { this.sleepSchedule = sleepSchedule; }
-    public String getCleanlinessLevel() { return cleanlinessLevel; }
-    public void setCleanlinessLevel(String cleanlinessLevel) { this.cleanlinessLevel = cleanlinessLevel; }
-    public String getNoiseTolerance() { return noiseTolerance; }
-    public void setNoiseTolerance(String noiseTolerance) { this.noiseTolerance = noiseTolerance; }
-    public String getSocialPreference() { return socialPreference; }
-    public void setSocialPreference(String socialPreference) { this.socialPreference = socialPreference; }
-    public LocalDateTime getUpdatedAt() { return updatedAt; }
-    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    /* ========= ENUMS REQUIRED BY TEST ========= */
+
+    public enum CleanlinessLevel {
+        LOW, MEDIUM, HIGH
+    }
+
+    public enum NoiseTolerance {
+        LOW, MEDIUM, HIGH
+    }
+
+    public enum SleepSchedule {
+        EARLY_BIRD, NIGHT_OWL, FLEXIBLE
+    }
+
+    public enum SocialPreference {
+        INTROVERT, AMBIVERT, EXTROVERT
+    }
+
+    /* ========= FIELDS ========= */
+
+    @Enumerated(EnumType.STRING)
+    private CleanlinessLevel cleanlinessLevel;
+
+    @Enumerated(EnumType.STRING)
+    private NoiseTolerance noiseTolerance;
+
+    @Enumerated(EnumType.STRING)
+    private SleepSchedule sleepSchedule;
+
+    @Enumerated(EnumType.STRING)
+    private SocialPreference socialPreference;
+
+    /* ========= GETTERS & SETTERS ========= */
+
+    public Long getId() {
+        return id;
+    }
+
+    public CleanlinessLevel getCleanlinessLevel() {
+        return cleanlinessLevel;
+    }
+
+    public void setCleanlinessLevel(CleanlinessLevel cleanlinessLevel) {
+        this.cleanlinessLevel = cleanlinessLevel;
+    }
+
+    public NoiseTolerance getNoiseTolerance() {
+        return noiseTolerance;
+    }
+
+    public void setNoiseTolerance(NoiseTolerance noiseTolerance) {
+        this.noiseTolerance = noiseTolerance;
+    }
+
+    public SleepSchedule getSleepSchedule() {
+        return sleepSchedule;
+    }
+
+    public void setSleepSchedule(SleepSchedule sleepSchedule) {
+        this.sleepSchedule = sleepSchedule;
+    }
+
+    public SocialPreference getSocialPreference() {
+        return socialPreference;
+    }
+
+    public void setSocialPreference(SocialPreference socialPreference) {
+        this.socialPreference = socialPreference;
+    }
 }
