@@ -4,26 +4,23 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 
 import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
 
-    // ✅ Primary bean used by SpringDoc
+    // ✅ This is the ONLY OpenAPI bean
     @Bean
-    @Primary
-    public OpenAPI api() {
+    public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(List.of(
                         new Server().url("https://9217.pro604cr.amypo.ai")
                 ));
     }
 
-    // ✅ Secondary bean expected by test cases
-    @Bean
-    public OpenAPI customOpenAPI() {
-        return api();
+    // ✅ Method required by tests, but NOT a bean
+    public OpenAPI api() {
+        return customOpenAPI();
     }
 }
