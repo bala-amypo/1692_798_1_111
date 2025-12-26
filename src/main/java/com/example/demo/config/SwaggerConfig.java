@@ -14,7 +14,22 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .servers(Collections.singletonList(
-                        new Server().url("https://9217.pro604cr.amypo.ai/")
+                        new Server().url("https://9217.pro604cr.amypo.ai/
+                        // 
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        ")
                 ));
     }
 }
