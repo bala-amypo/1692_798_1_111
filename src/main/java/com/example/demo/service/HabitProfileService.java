@@ -5,12 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface HabitProfileService {
-
     HabitProfile createOrUpdateHabit(HabitProfile habit);
-
-    Optional<HabitProfile> getHabitById(Long id);
-
     HabitProfile getHabitByStudent(Long studentId);
-
+    Optional<HabitProfile> getHabitById(Long id);
     List<HabitProfile> getAllHabitProfiles();
 }
