@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface RoomAssignmentService {
     RoomAssignmentRecord assignRoom(RoomAssignmentRecord assignment);
-    RoomAssignmentRecord getAssignmentByld(Long id);
-    List<RoomAssignmentRecord> getAssignmentsByStudent(Long studentld);
+    RoomAssignmentRecord updateStatus(Long id, String status);
+    RoomAssignmentRecord getAssignmentById(Long id);
+    List<RoomAssignmentRecord> getAssignmentsByStudent(Long studentId);
     List<RoomAssignmentRecord> getAllAssignments();
-    void updateStatus(Long id, String status);
 }
