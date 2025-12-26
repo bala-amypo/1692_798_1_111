@@ -117,4 +117,3 @@ public class HabitProfile {
         this.updatedAt = updatedAt;
     }
 }
-`
