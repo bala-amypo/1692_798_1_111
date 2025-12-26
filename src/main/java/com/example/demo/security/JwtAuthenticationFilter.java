@@ -2,14 +2,14 @@ package com.example.demo.security;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
-import org.springframework.security.authentication.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationFilter extends GenericFilter {
+public class JwtAuthenticationFilter implements Filter {
 
     private final JwtUtil jwtUtil;
 
@@ -18,20 +18,35 @@ public class JwtAuthenticationFilter extends GenericFilter {
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+    public void doFilter(
+            ServletRequest request,
+            ServletResponse response,
+            FilterChain chain)
             throws IOException, ServletException {
 
-        HttpServletRequest request = (HttpServletRequest) req;
-        String auth = request.getHeader("Authorization");
+        HttpServletRequest req = (HttpServletRequest) request;
+        String path = req.getRequestURI();
 
-        if (auth != null && auth.startsWith("Bearer ")) {
-            String token = auth.substring(7);
-            String user = jwtUtil.extractUsername(token);
+        // ✅ IGNORE SWAGGER & AUTH
+        if (path.startsWith("/swagger")
+                || path.startsWith("/v3/api-docs")
+                || path.startsWith("/auth")) {
+            chain.doFilter(request, response);
+            return;
+        }
+
+        String authHeader = req.getHeader("Authorization");
+
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            String username = jwtUtil.extractUsername(token);
 
             UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(user, null, null);
+                    new UsernamePasswordAuthenticationToken(username, null, null);
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        chain.doFilter(req, res);
+
+        chain.doFilter(request, response);
     }
 }
