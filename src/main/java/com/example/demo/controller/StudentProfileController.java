@@ -2,47 +2,36 @@ package com.example.demo.controller;
 
 import com.example.demo.model.StudentProfile;
 import com.example.demo.service.StudentProfileService;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
-@Tag(name = "Student Profile Management", description = "Endpoints for managing student profiles")
 public class StudentProfileController {
+    private final StudentProfileService service;
 
-    private final StudentProfileService studentService;
-
-    // Constructor Injection
-    public StudentProfileController(StudentProfileService studentService) {
-        this.studentService = studentService;
+    public StudentProfileController(StudentProfileService service) {
+        this.service = service;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<StudentProfile> createStudent(@RequestBody StudentProfile profile) {
-        return ResponseEntity.ok(studentService.createStudent(profile));
+    @PostMapping
+    public ResponseEntity<StudentProfile> create(@RequestBody StudentProfile student) {
+        return ResponseEntity.ok(service.createStudent(student));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StudentProfile> getStudentById(@PathVariable Long id) {
-        return ResponseEntity.ok(studentService.getStudentByld(id));
+    public ResponseEntity<StudentProfile> getById(@PathVariable Long id) {
+        return ResponseEntity.ok(service.getStudentById(id));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<StudentProfile>> getAllStudents() {
-        return ResponseEntity.ok(studentService.getAllStudents());
+    @GetMapping
+    public ResponseEntity<List<StudentProfile>> getAll() {
+        return ResponseEntity.ok(service.getAllStudents());
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Void> updateStudentStatus(@PathVariable Long id, @RequestParam boolean status) {
-        studentService.updateStudentStatus(id, status);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/lookup/{studentld}")
-    public ResponseEntity<StudentProfile> lookupByStudentId(@PathVariable String studentld) {
-        return ResponseEntity.ok(studentService.findByStudentld(studentld));
+    public ResponseEntity<StudentProfile> updateStatus(@PathVariable Long id, @RequestParam Boolean active) {
+        return ResponseEntity.ok(service.updateStudentStatus(id, active));
     }
 }

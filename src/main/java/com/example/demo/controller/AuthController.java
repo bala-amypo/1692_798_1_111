@@ -1,26 +1,39 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AuthRequest;
-import com.example.demo.dto.AuthResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import com.example.demo.security.JwtUtil;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
-@Tag(name = "Authentication", description = "Endpoints for public registration and login")
+@RequestMapping("/api/auth")
 public class AuthController {
+    private final JwtUtil jwtUtil;
+    private final Map<String, String> users = new HashMap<>();
 
-    // Note: Implementation logic usually goes to a AuthService/SecurityManager
+    public AuthController(JwtUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody AuthRequest request) {
-        // Logic for user registration
+    public ResponseEntity<?> register(@RequestBody AuthRequest request) {
+        if (users.containsKey(request.getUsername())) {
+            return ResponseEntity.badRequest().body("User already exists");
+        }
+        users.put(request.getUsername(), request.getPassword());
         return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
-        // Logic for JWT generation
-        return ResponseEntity.ok(new AuthResponse("mock-jwt-token"));
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        String token = jwtUtil.generateToken(
+            request.getUsername(), 
+            request.getRole() != null ? request.getRole() : "USER",
+            request.getEmail(),
+            "1"
+        );
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }
