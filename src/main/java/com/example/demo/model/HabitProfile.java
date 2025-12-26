@@ -1,11 +1,6 @@
-package com.example.demo.model;
+package com.example.demo.;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "habit_profiles")
@@ -15,15 +10,7 @@ public class HabitProfile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
-    @Column(name = "student_id", nullable = false, unique = true)
     private Long studentId;
-
-    @NotNull
-    @Min(1)
-    @Max(24)
-    @Column(name = "study_hours_per_day")
-    private Integer studyHoursPerDay;
 
     @Enumerated(EnumType.STRING)
     private CleanlinessLevel cleanlinessLevel;
@@ -37,5 +24,103 @@ public class HabitProfile {
     @Enumerated(EnumType.STRING)
     private SocialPreference socialPreference;
 
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Integer studyHours;
+
+    /* ---------- Constructors ---------- */
+
+    public HabitProfile() {
+    }
+
+    public HabitProfile(Long studentId,
+                        CleanlinessLevel cleanlinessLevel,
+                        NoiseTolerance noiseTolerance,
+                        SleepSchedule sleepSchedule,
+                        SocialPreference socialPreference,
+                        Integer studyHours) {
+        this.studentId = studentId;
+        this.cleanlinessLevel = cleanlinessLevel;
+        this.noiseTolerance = noiseTolerance;
+        this.sleepSchedule = sleepSchedule;
+        this.socialPreference = socialPreference;
+        this.studyHours = studyHours;
+    }
+
+    /* ---------- Getters & Setters ---------- */
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Long studentId) {
+        this.studentId = studentId;
+    }
+
+    public CleanlinessLevel getCleanlinessLevel() {
+        return cleanlinessLevel;
+    }
+
+    public void setCleanlinessLevel(CleanlinessLevel cleanlinessLevel) {
+        this.cleanlinessLevel = cleanlinessLevel;
+    }
+
+    public NoiseTolerance getNoiseTolerance() {
+        return noiseTolerance;
+    }
+
+    public void setNoiseTolerance(NoiseTolerance noiseTolerance) {
+        this.noiseTolerance = noiseTolerance;
+    }
+
+    public SleepSchedule getSleepSchedule() {
+        return sleepSchedule;
+    }
+
+    public void setSleepSchedule(SleepSchedule sleepSchedule) {
+        this.sleepSchedule = sleepSchedule;
+    }
+
+    public SocialPreference getSocialPreference() {
+        return socialPreference;
+    }
+
+    public void setSocialPreference(SocialPreference socialPreference) {
+        this.socialPreference = socialPreference;
+    }
+
+    public Integer getStudyHours() {
+        return studyHours;
+    }
+
+    public void setStudyHours(Integer studyHours) {
+        this.studyHours = studyHours;
+    }
+
+    /* ---------- ENUMS ---------- */
+
+    public enum CleanlinessLevel {
+        LOW,
+        MEDIUM,
+        HIGH
+    }
+
+    public enum NoiseTolerance {
+        LOW,
+        MEDIUM,
+        HIGH
+    }
+
+    public enum SleepSchedule {
+        EARLY_BIRD,
+        NIGHT_OWL
+    }
+
+    public enum SocialPreference {
+        INTROVERT,
+        AMBIVERT,
+        EXTROVERT
+    }
+}
