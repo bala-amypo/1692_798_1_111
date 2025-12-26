@@ -5,7 +5,7 @@ import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Collections;
+import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
@@ -13,23 +13,8 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .servers(Collections.singletonList(
-                        new Server().url("https://9217.pro604cr.amypo.ai/
-                        // 
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        ")
+                .servers(List.of(
+                        new Server().url("/")
                 ));
     }
 }

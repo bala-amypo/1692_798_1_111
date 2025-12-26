@@ -10,10 +10,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(JwtAuthenticationFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -22,7 +22,8 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // ✅ ALLOW AUTH & SWAGGER
+
+                // 🔓 PUBLIC ENDPOINTS
                 .requestMatchers(
                         "/auth/**",
                         "/swagger-ui/**",
@@ -30,10 +31,16 @@ public class SecurityConfig {
                         "/v3/api-docs/**"
                 ).permitAll()
 
-                // 🔐 EVERYTHING ELSE NEEDS JWT
-                .anyRequest().authenticated()
+                // 🔐 PROTECTED ENDPOINTS
+                .requestMatchers("/api/**").authenticated()
+
+                // ❌ BLOCK EVERYTHING ELSE
+                .anyRequest().denyAll()
             )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(
+                    jwtAuthenticationFilter,
+                    UsernamePasswordAuthenticationFilter.class
+            );
 
         return http.build();
     }
