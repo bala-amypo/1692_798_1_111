@@ -1,15 +1,26 @@
 package com.example.demo.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.demo.model.RoomAssignmentRecord;
+import com.example.demo.service.RoomAssignmentService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/room-assignments")
+@RequestMapping("/api/rooms")
 public class RoomAssignmentController {
+    private final RoomAssignmentService service;
 
-    @GetMapping("/health")
-    public String healthCheck() {
-        return "Room Assignment Controller is running";
+    public RoomAssignmentController(RoomAssignmentService service) {
+        this.service = service;
+    }
+
+    @PostMapping("/assign")
+    public ResponseEntity<RoomAssignmentRecord> assign(@RequestBody RoomAssignmentRecord assignment) {
+        return ResponseEntity.ok(service.assignRoom(assignment));
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<RoomAssignmentRecord> updateStatus(@PathVariable Long id, @RequestParam String status) {
+        return ResponseEntity.ok(service.updateStatus(id, status));
     }
 }
