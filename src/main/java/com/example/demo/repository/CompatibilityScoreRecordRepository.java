@@ -8,9 +8,6 @@ import java.util.Optional;
 
 @Repository
 public interface CompatibilityScoreRecordRepository extends JpaRepository<CompatibilityScoreRecord, Long> {
-    // Requirement 4.3: findByStudentAldAndStudentBld(Long id1, Long id2)
-    Optional<CompatibilityScoreRecord> findByStudentAldAndStudentBld(Long id1, Long id2);
-    
-    // Requirement 4.4: findByStudentAldOrStudentBld(Long id1, Long id2)
-    List<CompatibilityScoreRecord> findByStudentAldOrStudentBld(Long id1, Long id2);
+    Optional<CompatibilityScoreRecord> findByStudentAIdAndStudentBId(Long studentAId, Long studentBId);
+    List<CompatibilityScoreRecord> findByStudentAIdOrStudentBId(Long studentAId, Long studentBId);
 }

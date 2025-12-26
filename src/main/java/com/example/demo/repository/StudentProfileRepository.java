@@ -7,10 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface StudentProfileRepository extends JpaRepository<StudentProfile, Long> {
-    // Requirement 4.1: findByStudentld(String studentld)
-    Optional<StudentProfile> findByStudentld(String studentld);
-    
-    // For validation
-    boolean existsByStudentld(String studentld);
-    boolean existsByEmail(String email);
+    Optional<StudentProfile> findByStudentId(String studentId);
+    Optional<StudentProfile> findByEmail(String email);
 }
